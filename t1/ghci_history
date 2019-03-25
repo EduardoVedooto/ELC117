@@ -1,0 +1,100 @@
+:q
+encodeName "Eduardo Rivas Vedooto"
+userName "Eduardo Rivas Vedooto"
+semVogais "Eduardo Rivas Vedooto"
+:l t1.hs
+:cd C:\Users\Eduardo\Documents\GitHub\ELC117\t1
+:q
+:q
+semVogais "Eduardo Rivas Vedooto"
+semVogais "Eduardo Rivas Vedooto
+:r
+:r
+:r
+htmlListItems ["Eduardo","DUDU"]
+:r
+:r
+:r
+isVowel 'e'
+isVowel 'r'
+isVowel a
+addDot ["eduardo rivas", "Vedooto"]
+:r
+:r
+addDot ["eduardo rivas", "Vedooto"]
+addDot ["eduardo rivas", "Vedooto"]
+:r
+addDot ["eduardo rivas", "Vedooto"]
+:r
+:r
+:r
+:r
+encodeName "eduardo rivas vedooto"
+:r
+encodeName "eduardo rivas vedooto"
+:r
+code 'e'
+:r
+:r
+:r
+:r
+:r
+:r
+userName "EDUARDO RIVAS VEDOOTO"
+:l t1.hs
+t1.hs
+:cd C:\Users\Eduardo\Documents\GitHub\ELC117\t1
+:q
+isInt "3942 "
+isInt "3942"
+isInt "123"
+isInt "123a"
+:l t1.hs
+:cd C:\Users\Eduardo\Documents\GitHub\ELC117\t1
+:q
+isInt "123"
+isInt "123 "
+isInt "123"
+isInt "e13"
+isInt "123"
+isInt [1,2,3]
+[1,2,3]
+:r
+:l t1.hs
+:cd C:\Users\Eduardo\Documents\GitHub\ELC117\t1
+:q
+semVogais "EDUARDO RIVAS VEDOOTO"
+semVogais "dudu"
+:r
+:r
+:r
+:r
+:l t1.hs
+:cd C:\Users\Eduardo\Documents\GitHub\ELC117\t1
+:q
+removeVogais "dudu"
+removeVogais ["eduardo", "dudu"]
+:r
+:r
+remVog "EDUARDO"
+:r
+:r
+removeNonUppercase "HAHAha"
+:r
+removeNonUppercase ["HAHAha"]
+:r
+:r
+:r
+removeNonUppercase ["HAHAha"]
+removeNonUpperCase ["HAHAha"]
+:l Pertence.hs
+:cd D:\Apps\Sublime\Projects
+:cd D:\Apps\Sublime\Projects
+semVogais ["aeiou"]
+semVogais ["eduardo"]
+:r
+semVogais ["eduardo"]
+:r
+:r
+:l t1.hs
+:cd C:\Users\Eduardo\Documents\GitHub\ELC117\t1
