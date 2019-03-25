@@ -1,0 +1,29 @@
+GHCi, version 8.6.3: http://www.haskell.org/ghc/  :? for help
+[1 of 1] Compiling Main             ( C:\\Users\Eduardo\Documents\GitHub\ELC117\t1\t1.hs, interpreted )
+Ok, one module loaded.
+*Main> isVowel 'a'
+True
+*Main> isVowel 'b'
+False
+*Main> addComma ["Edu","dudu"]
+["Edu,","dudu,"]
+*Main> htmlListItems ["Edu","dudu"]
+["<LI>Edu</LI>","<LI>dudu</LI>"]
+*Main> semVogais "Eduardo Vedooto"
+"drd Vdt"
+*Main> addMinus "Eduardo Vedooto"
+"------- -------"
+*Main> firstName "Eduardo Vedooto"
+"Eduardo"
+*Main> isInt "9189"
+True
+*Main> isInt "39j1"
+False
+*Main> lastName "Eduardo Vedooto"
+"Vedooto"
+*Main> userName "Eduardo Vedooto"
+"evedooto"
+*Main> encodeName "Eduardo Vedooto"
+"Ed04rd1 V3d11t1"
+*Main> addDot ["EDU","Eduardo Vedooto"]
+["EDU.......","Eduardo Ve"]
