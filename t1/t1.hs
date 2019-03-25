@@ -70,17 +70,6 @@ encodeName (x:xs) = (code x:encodeName xs)
 
 {-11°) Escreva uma função betterEncodeName :: String -> String que substitua vogais em uma string, conforme este esquema: 
 a = 4, e = 3, i = 1, o = 0, u = 00.-}
-bettercode :: Char -> Char
-bettercode x | x == 'a' = '4'
-             | x == 'e' = '3'
-             | x == 'i' = '1'
-             | x == 'o' = '0'
-             | otherwise = x
-
-betterEncodeName :: String -> String
-betterEncodeName [] = []
-betterEncodeName ["u"] = "00"
-betterEncodeName (x:xs) = (bettercode x:betterEncodeName xs)
 
 {-12°) Dada uma lista de strings, produzir outra lista com strings de 10 caracteres, usando o seguinte esquema:
 strings de entrada com mais de 10 caracteres são truncadas, strings com até 10 caracteres são completadas com '.' 
