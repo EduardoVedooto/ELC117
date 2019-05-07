@@ -8,17 +8,19 @@ o assassino de um terrível caso envolvendo 9 pessoas.
 
 vitima(anita).
 
+  
 /*  
 Lista de Suspeitos:
-    - Bia
-    - Caren
-    - Alice
-    - Maria
-    - Bernardo
-    - Pedro
-    - Henrique
-    - Adriano
+  - Bia
+  - Caren
+  - Alice
+  - Maria
+  - Bernardo
+  - Pedro
+  - Henrique
+  - Adriano
 */
+
 
 %   Localização dos suspeitos durante a semana.
 localizacao(alice,seg,ap).
@@ -98,17 +100,18 @@ relacionamento(maria, henrique).
 
 crime(X) :- localizacao(X,sex,ap); localizacao(X,qui,ap).     % Localização onde o crime foi executado
 chave(X) :- localizacao(X,qua,sm); localizacao(X,ter,poa).    % Localização onde a chave foi roubada
+chave(bia).                                                   % Bia sempre possui a chave
 arma(X) :- baseball(X); martelo(X).                           % Arma usada durante o assassinato
-  baseball(X) :- localizacao(X,qui,poa); localizacao(X,qua,sm).
+  baseball(X) :- localizacao(X,qui,poa); localizacao(X,qua,sm), relacionamento(X,bernardo).
   martelo(X) :- localizacao(X,qua,ap); localizacao(X,qui,ap).
 
 %Possíveis motivos que levaram ao assassinato
-ciumes(X,Y) :- relacionamento(X,Z), relacionamento(Z,Y).      
+ciumes(X) :- relacionamento(anita, Y), relacionamento(Y, X).      
 dinheiro(X) :- pobre(X).                                      
-insano(adriano).                                              
+insano(adriano).
 insano(maria).
 
 acesso(X) :- arma(X), chave(X), crime(X).                     % O assassino então possui a chave do apartamento e tinha a arma. 
-motivo(X) :- ciumes(anita,X); dinheiro(X);insano(X).          % O motivo foi: ciúmes, falta de dinheiro ou a pessoa era louca.
+motivo(X) :- ciumes(X); dinheiro(X);insano(X).          % O motivo foi: ciúmes, falta de dinheiro ou a pessoa era louca.
 
 assassino(X) :- motivo(X), acesso(X),!.                         % Quem será o assassino? O_O
