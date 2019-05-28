@@ -46,7 +46,7 @@ comment([],[]).
 comment(L1,L2) :-
  L1 = [H1|T1],
  L2 = [H2|T2],
- string_concat('%%',H1,H2),
+ concat("%%",H1,H2),!,
  comment(T1,T2).
 %---------------------------------------------------------%
 
@@ -64,9 +64,6 @@ onlyEven(L1,L2) :-
  H2 is H1,
  onlyEven(T1,T2),!.
 
-onlyEven(L1,L2) :-
- L1 = [_|T],
- onlyEven(T,L2).
 %---------------------------------------------------------%
 
 /*7- Defina um predicado recursivo countdown(N,L), de forma 
