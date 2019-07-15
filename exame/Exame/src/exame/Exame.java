@@ -170,7 +170,6 @@ public class Exame extends Application {
             }
 
             String data = cellsData.toString();
-            //formatingString(data);
             data = formatingString(data);
             data = data.replace("[", "");
             data = data.replace("]", "");
