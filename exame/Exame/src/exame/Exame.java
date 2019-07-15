@@ -187,7 +187,7 @@ public class Exame extends Application {
 
         table.setOnMouseClicked((MouseEvent event) -> {
             if (event.getClickCount() >= 1) {
-                onEdit();
+                EnableButtons();
             }
         });
 
@@ -297,7 +297,7 @@ public class Exame extends Application {
         list.add(new Student(txtName.getText(),txtCourse.getText(),txtSemester.getText(),txtRegistration.getText()));
     }*/
 
-    public void onEdit() {
+    public void EnableButtons() {
         if (table.getSelectionModel().getSelectedItem() != null) {
             Student selectedStudent = table.getSelectionModel().getSelectedItem();
             txtName.setText(selectedStudent.getNome());
