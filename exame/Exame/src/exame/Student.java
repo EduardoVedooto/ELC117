@@ -4,14 +4,14 @@ public class Student {
 
     private String name;
     private String course;
-    private int semester;
-    private int registration;
+    private String semester;
+    private String registration;
 
     public Student(String name, String course, String semester, String registration) {
         this.name = name;
         this.course = course;
-        this.semester = Integer.parseInt(semester);
-        this.registration = Integer.parseInt(registration);
+        this.semester = semester;
+        this.registration = registration;
     }
 
     Student() {
@@ -33,19 +33,19 @@ public class Student {
         this.course = course;
     }
 
-    public int getSemestre() {
+    public String getSemestre() {
         return semester;
     }
 
-    public void setSemestre(int semester) {
+    public void setSemestre(String semester) {
         this.semester = semester;
     }
 
-    public int  getMatricula() {
+    public String  getMatricula() {
         return registration;
     }
 
-    public void setMatricula(int registration) {
+    public void setMatricula(String registration) {
         this.registration = registration;
     }
     

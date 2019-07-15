@@ -61,8 +61,8 @@ public class Exame extends Application {
     private final Button btnEdit = new Button("Editar");
     TableColumn<Student, String> nameColumn = new TableColumn<>("Nome");
     TableColumn<Student, String> courseColumn = new TableColumn<>("Curso");
-    TableColumn<Student, Integer> semesterColumn = new TableColumn<>("Semestre");
-    TableColumn<Student, Integer> registrationColumn = new TableColumn<>("Matrícula");
+    TableColumn<Student, String> semesterColumn = new TableColumn<>("Semestre");
+    TableColumn<Student, String> registrationColumn = new TableColumn<>("Matrícula");
 
     @Override
     public void start(Stage primaryStage) {
@@ -127,7 +127,7 @@ public class Exame extends Application {
 
         //Editing Button
         btnEdit.setOnAction(e -> editButton());
-        
+
         //Putting the menu
         menu.getItems().addAll(load, save, exit);
         menuBar.getMenus().add(menu);
@@ -142,8 +142,23 @@ public class Exame extends Application {
         load.setOnAction((ActionEvent event) -> {
             fileChooser = new FileChooser();
             file = fileChooser.showOpenDialog(window);
-            String path = file.getAbsolutePath();
-            readCSVFile(path);
+            String path = file.getPath();
+
+            BufferedReader fileCSV;
+            try {
+                fileCSV = new BufferedReader(new FileReader(path));
+                String line;
+                while ((line = fileCSV.readLine()) != null) {
+                    String[] cell = line.split(",", -1);
+                    Student student = new Student(cell[0], cell[1], cell[2], cell[3]);
+                    list.add(student);
+                }
+            } catch (FileNotFoundException ex) {
+                System.out.println("Arquivo não encontrado.");
+            } catch (IOException ex) {
+                System.out.println("Ocorreu um erro!");
+                Logger.getLogger(Exame.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
 
         //SAVE
@@ -159,8 +174,8 @@ public class Exame extends Application {
 
                 cellsData.add(nameColumn.getCellObservableValue(item).getValue());
                 cellsData.add(courseColumn.getCellObservableValue(item).getValue());
-                cellsData.add(Integer.toString(semesterColumn.getCellObservableValue(item).getValue()));
-                cellsData.add(Integer.toString(registrationColumn.getCellObservableValue(item).getValue()));
+                cellsData.add(semesterColumn.getCellObservableValue(item).getValue());
+                cellsData.add(registrationColumn.getCellObservableValue(item).getValue());
                 cellsData.add("\n");
 
             }
@@ -221,65 +236,82 @@ public class Exame extends Application {
     }  //TERMINADO
 
     private void addButton() {
-        
+
         boolean flag = false;
 
         ArrayList<String> names = new ArrayList<>();
         for (Student item : table.getItems()) {
             names.add(nameColumn.getCellObservableValue(item).getValue());
         }
-        ArrayList<Integer> registrations = new ArrayList<>();
+        ArrayList<String> registrations = new ArrayList<>();
         for (Student item : table.getItems()) {
             registrations.add(registrationColumn.getCellObservableValue(item).getValue());
         }
 
-        try {
-            for (int i = 0; i < names.size(); i++) {
+        for (int i = 0; i < names.size(); i++) {
 
-                if (txtName.getText().equals(names.get(i)) || registrations.get(i) == Integer.parseInt(txtRegistration.getText())) {
-                    Alert alert = new Alert(AlertType.CONFIRMATION);
-                    alert.setTitle("Aviso");
-                    alert.setHeaderText("Você está prestes a adicionar um aluno já existente.");
-                    alert.setContentText("Você está certo disso?");
-                    Optional<ButtonType> result = alert.showAndWait();
-                    if (result.get() == ButtonType.OK) {
-                        addStudent();
-                        clearTextArea();
-                        flag = true;
-                        break;
-                    } else {
-                        clearTextArea();
-                        flag = true;
-                        break;
-                    }
+            if (txtName.getText().equals(names.get(i)) || txtRegistration.getText().equals(registrations.get(i))) {
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Aviso");
+                alert.setHeaderText("Você está prestes a adicionar um aluno já existente.");
+                alert.setContentText("Você está certo disso?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    addStudent();
+                    clearTextArea();
+                    flag = true;
+                    btnDel.setDisable(true);
+                    btnEdit.setDisable(true);
+                    break;
+                } else {
+                    clearTextArea();
+                    flag = true;
+                    btnDel.setDisable(true);
+                    btnEdit.setDisable(true);
+                    break;
                 }
             }
-        } catch (NumberFormatException e) {
-            Alert warning = new Alert(AlertType.WARNING);
-            warning.setTitle("Warning");
-            warning.setHeaderText("Preechimento incorreto do campo \"Matrícula\"");
-            warning.setContentText("Por favor, insira apenas NÚMEROS.");
-            warning.show();
-            clearTextArea();
-            flag = true;
         }
         if (!flag) {
             addStudent();
-            clearTextArea();
         }
-        
+
     }  //TERMINADO
 
     private void addStudent() {
-        try {
-            list.add(new Student(txtName.getText(), txtCourse.getText(), txtSemester.getText(), txtRegistration.getText()));
-        } catch (NumberFormatException ex) {
+        if (doesNotContainNumber(txtName.getText())) {
             Alert warning = new Alert(AlertType.WARNING);
             warning.setTitle("Warning");
-            warning.setHeaderText("Preechimento incorreto do campo \"Semestre\" e/ou \"Matrícula\".");
+            warning.setHeaderText("Preechimento incorreto do campo \"Nome\".");
+            warning.setContentText("Por favor, insira apenas LETRAS.");
+            warning.show();
+            txtName.clear();
+        } else if (doesNotContainNumber(txtCourse.getText())) {
+            Alert warning = new Alert(AlertType.WARNING);
+            warning.setTitle("Warning");
+            warning.setHeaderText("Preechimento incorreto do campo \"Curso\".");
+            warning.setContentText("Por favor, insira apenas LETRAS.");
+            warning.show();
+            txtCourse.clear();
+        } else if (onlyContainNumber(txtSemester.getText())) {
+            Alert warning = new Alert(AlertType.WARNING);
+            warning.setTitle("Warning");
+            warning.setHeaderText("Preechimento incorreto do campo \"Semestre\".");
             warning.setContentText("Por favor, insira apenas NÚMEROS.");
             warning.show();
+            txtSemester.clear();
+        } else if (onlyContainNumber(txtRegistration.getText())) {
+            Alert warning = new Alert(AlertType.WARNING);
+            warning.setTitle("Warning");
+            warning.setHeaderText("Preechimento incorreto do campo \"Matrícula\".");
+            warning.setContentText("Por favor, insira apenas NÚMEROS.");
+            warning.show();
+            txtRegistration.clear();
+        } else {
+            list.add(new Student(txtName.getText(), txtCourse.getText(), txtSemester.getText(), txtRegistration.getText()));
+            clearTextArea();
         }
+
     }  //TERMINADO
 
     private void clearTextArea() {
@@ -298,16 +330,16 @@ public class Exame extends Application {
         btnDel.setDisable(true);
         btnEdit.setDisable(true);
     }  //TERMINADO
-    
+
     public void EnableButtons() {
         if (table.getSelectionModel().getSelectedItem() != null) {
             Student selectedStudent = table.getSelectionModel().getSelectedItem();
             txtName.setText(selectedStudent.getNome());
             txtCourse.setText(selectedStudent.getCurso());
-            txtSemester.setText(Integer.toString(selectedStudent.getSemestre()));
-            txtRegistration.setText(Integer.toString(selectedStudent.getMatricula()));
+            txtSemester.setText(selectedStudent.getSemestre());
+            txtRegistration.setText(selectedStudent.getMatricula());
         }
-        
+
         lblAdd.setText("\n   Editar Aluno");
         btnDel.setDisable(false);
         btnEdit.setDisable(false);
@@ -348,6 +380,32 @@ public class Exame extends Application {
         return data;
     }  //TERMINADO
 
+    public final boolean doesNotContainNumber(String str) {
+        boolean containsDigit = false;
+
+        if (str != null && !str.isEmpty()) {
+            for (char c : str.toCharArray()) {
+                if (containsDigit = Character.isDigit(c)) {
+                    break;
+                }
+            }
+        }
+        return containsDigit;
+    }  //TERMINADO
+
+    public final boolean onlyContainNumber(String str) {
+        boolean containsDigit = false;
+
+        if (str != null && !str.isEmpty()) {
+            for (char c : str.toCharArray()) {
+                if (containsDigit = Character.isAlphabetic(c)) {
+                    break;
+                }
+            }
+        }
+        return containsDigit;
+    }  //TERMINADO
+    
     public static void main(String[] args) {
         launch(args);
     }  //MAIN
