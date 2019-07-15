@@ -12,7 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,17 +28,14 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 public class Exame extends Application {
 
@@ -130,8 +126,8 @@ public class Exame extends Application {
         btnDel.setOnAction(e -> deleteButton());
 
         //Editing Button
-        //btnDel.setOnAction(e -> onEdit());
-
+        btnEdit.setOnAction(e -> editButton());
+        
         //Putting the menu
         menu.getItems().addAll(load, save, exit);
         menuBar.getMenus().add(menu);
@@ -211,7 +207,7 @@ public class Exame extends Application {
         window.setScene(scene);
         window.show();
 
-    }
+    }  //TERMINADO
 
     private void deleteButton() {
         ObservableList<Student> selectStudent, allStudents;
@@ -222,9 +218,10 @@ public class Exame extends Application {
         lblAdd.setText("\n   Adicionar novo aluno:");
         btnDel.setDisable(true);
         btnEdit.setDisable(true);
-    }
+    }  //TERMINADO
 
     private void addButton() {
+        
         boolean flag = false;
 
         ArrayList<String> names = new ArrayList<>();
@@ -270,7 +267,8 @@ public class Exame extends Application {
             addStudent();
             clearTextArea();
         }
-    }
+        
+    }  //TERMINADO
 
     private void addStudent() {
         try {
@@ -278,25 +276,29 @@ public class Exame extends Application {
         } catch (NumberFormatException ex) {
             Alert warning = new Alert(AlertType.WARNING);
             warning.setTitle("Warning");
-            warning.setHeaderText("Preechimento incorreto do campo \"Semestre\"");
+            warning.setHeaderText("Preechimento incorreto do campo \"Semestre\" e/ou \"Matrícula\".");
             warning.setContentText("Por favor, insira apenas NÚMEROS.");
             warning.show();
         }
-    }
+    }  //TERMINADO
 
     private void clearTextArea() {
         txtName.clear();
         txtCourse.clear();
         txtSemester.clear();
         txtRegistration.clear();
-    }
+    }  //TERMINADO
 
-   /* private void editButton() {
+    private void editButton() {
         int index = table.getSelectionModel().getSelectedIndex();
+        Student student = table.getSelectionModel().getSelectedItem();
         table.getItems().remove(index);
-        list.add(new Student(txtName.getText(),txtCourse.getText(),txtSemester.getText(),txtRegistration.getText()));
-    }*/
-
+        addButton();
+        clearTextArea();
+        btnDel.setDisable(true);
+        btnEdit.setDisable(true);
+    }  //TERMINADO
+    
     public void EnableButtons() {
         if (table.getSelectionModel().getSelectedItem() != null) {
             Student selectedStudent = table.getSelectionModel().getSelectedItem();
@@ -305,15 +307,16 @@ public class Exame extends Application {
             txtSemester.setText(Integer.toString(selectedStudent.getSemestre()));
             txtRegistration.setText(Integer.toString(selectedStudent.getMatricula()));
         }
+        
         lblAdd.setText("\n   Editar Aluno");
         btnDel.setDisable(false);
         btnEdit.setDisable(false);
-    }
+    }  //TERMINADO
 
     private void readCSVFile(String CSVFile) {
-        try {
-            BufferedReader fileCSV;
 
+        BufferedReader fileCSV;
+        try {
             fileCSV = new BufferedReader(new FileReader(CSVFile));
             String line;
             while ((line = fileCSV.readLine()) != null) {
@@ -327,8 +330,8 @@ public class Exame extends Application {
             Logger.getLogger(Exame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
-    
+    }  //TERMINADO
+
     public String formatingString(String str) {
         String string = null;
 
@@ -341,12 +344,12 @@ public class Exame extends Application {
             }
         }
         String data = string.replaceFirst("null", "");
-       
+
         return data;
-    }
+    }  //TERMINADO
 
     public static void main(String[] args) {
         launch(args);
-    }
+    }  //MAIN
 
 }
